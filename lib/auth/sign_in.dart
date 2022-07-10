@@ -3,6 +3,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:food_app/screens/Home_screen/home_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -12,6 +13,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  bool _isLoggedIn = false;
+  Map _userObj = {};
   _googleSignUp() async {
     try {
       final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -86,10 +89,16 @@ class _SignInState extends State<SignIn> {
                     text: "Sign In with Apple",
                     onPressed: () {},
                   ),
-                  SignInButton(
-                    Buttons.FacebookNew,
-                    text: "Sign In with Facebook",
-                    onPressed: () {},
+                  Container(
+                    child: _isLoggedIn
+                        ? Column(
+                            children: [HomeScreen()],
+                          )
+                        : SignInButton(
+                            Buttons.FacebookNew,
+                            text: "Sign In with Facebook",
+                            onPressed: () async {},
+                          ),
                   ),
                   Text('By Signing you are agreeing to our'),
                   Text(
